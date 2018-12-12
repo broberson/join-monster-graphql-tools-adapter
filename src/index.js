@@ -12,7 +12,7 @@ module.exports = function joinMonsterAdapt(schema, jmConfigs) {
 
 function decorateType(type, jmConfig) {
   // first get the properties that should be on the type directly
-  const typeConfig = type._typeConfig
+  const typeConfig = type._typeConfig = type._typeConfig || {}
   typeConfig.sqlTable = jmConfig.sqlTable
   typeConfig.uniqueKey = jmConfig.uniqueKey
   if (jmConfig.alwaysFetch) {
@@ -23,7 +23,7 @@ function decorateType(type, jmConfig) {
     typeConfig.typeHint = jmConfig.typeHint
   }
   if (jmConfig.resolveType) {
-    typeConfig.resolveType = jmConfig.resolveType
+    type.resolveType = jmConfig.resolveType
   }
   for (let fieldName in jmConfig.fields) {
     const field = type._fields[fieldName]
